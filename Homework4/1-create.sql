@@ -5,113 +5,113 @@ USE vk;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки", 
-	email VARCHAR(100) NOT NULL UNIQUE COMMENT "Почта",
-    phone VARCHAR(100) NOT NULL UNIQUE COMMENT "Телефон",
-	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT 'Таблица пользователей';
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё", 
+	email VARCHAR(100) NOT NULL UNIQUE COMMENT "РџРѕС‡С‚Р°",
+    phone VARCHAR(100) NOT NULL UNIQUE COMMENT "РўРµР»РµС„РѕРЅ",
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT 'РўР°Р±Р»РёС†Р° РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№';
 
 DROP TABLE IF EXISTS profiles;
 CREATE TABLE profiles (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки", 
-    user_id INT UNSIGNED UNIQUE NOT NULL COMMENT "Ссылка на пользователя", 
-	first_name VARCHAR(100) NOT NULL COMMENT "Имя пользователя",
-	last_name VARCHAR(100) NOT NULL COMMENT "Фамилия пользователя",
-    birth_date DATE COMMENT "Дата рождения",    
-    country VARCHAR(100) COMMENT "Страна проживания",
-    city VARCHAR(100) COMMENT "Город проживания",
-    `status` ENUM('ONLINE', 'OFFLINE', 'INACTIVE') COMMENT "Текущий статус",
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё", 
+    user_id INT UNSIGNED UNIQUE NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ", 
+	first_name VARCHAR(100) NOT NULL COMMENT "РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+	last_name VARCHAR(100) NOT NULL COMMENT "Р¤Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+    birth_date DATE COMMENT "Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ",    
+    country VARCHAR(100) COMMENT "РЎС‚СЂР°РЅР° РїСЂРѕР¶РёРІР°РЅРёСЏ",
+    city VARCHAR(100) COMMENT "Р“РѕСЂРѕРґ РїСЂРѕР¶РёРІР°РЅРёСЏ",
+    `status` ENUM('ONLINE', 'OFFLINE', 'INACTIVE') COMMENT "РўРµРєСѓС‰РёР№ СЃС‚Р°С‚СѓСЃ",
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) COMMENT 'Таблица профилей пользователей';
+) COMMENT 'РўР°Р±Р»РёС†Р° РїСЂРѕС„РёР»РµР№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№';
 
--- Связываем поле "user_id" таблицы "profiles" с полем "id" таблицы "users" c помощью внешнего ключа
+-- РЎРІСЏР·С‹РІР°РµРј РїРѕР»Рµ "user_id" С‚Р°Р±Р»РёС†С‹ "profiles" СЃ РїРѕР»РµРј "id" С‚Р°Р±Р»РёС†С‹ "users" c РїРѕРјРѕС‰СЊСЋ РІРЅРµС€РЅРµРіРѕ РєР»СЋС‡Р°
 ALTER TABLE profiles ADD CONSTRAINT fk_profiles_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки", 
-	from_user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на отправителя сообщения",
-	to_user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на получателя сообщения",
-    message_header VARCHAR(255) COMMENT "Заголовок сообщения",
-    message_body TEXT NOT NULL COMMENT "Текст сообщения",
-    is_delivered BOOLEAN NOT NULL COMMENT "Признак доставки",
-    was_edited BOOLEAN NOT NULL COMMENT "Признак правки заголовка или тела сообщения",
-	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",
-	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT 'Таблица сообщений пользователей';
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё", 
+	from_user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РѕС‚РїСЂР°РІРёС‚РµР»СЏ СЃРѕРѕР±С‰РµРЅРёСЏ",
+	to_user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СѓС‡Р°С‚РµР»СЏ СЃРѕРѕР±С‰РµРЅРёСЏ",
+    message_header VARCHAR(255) COMMENT "Р—Р°РіРѕР»РѕРІРѕРє СЃРѕРѕР±С‰РµРЅРёСЏ",
+    message_body TEXT NOT NULL COMMENT "РўРµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ",
+    is_delivered BOOLEAN NOT NULL COMMENT "РџСЂРёР·РЅР°Рє РґРѕСЃС‚Р°РІРєРё",
+    was_edited BOOLEAN NOT NULL COMMENT "РџСЂРёР·РЅР°Рє РїСЂР°РІРєРё Р·Р°РіРѕР»РѕРІРєР° РёР»Рё С‚РµР»Р° СЃРѕРѕР±С‰РµРЅРёСЏ",
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT 'РўР°Р±Р»РёС†Р° СЃРѕРѕР±С‰РµРЅРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№';
 
 ALTER TABLE messages ADD CONSTRAINT fk_messages_from_user_id FOREIGN KEY (from_user_id) REFERENCES users(id);
 ALTER TABLE messages ADD CONSTRAINT fk_messages_to_user_id FOREIGN KEY (to_user_id) REFERENCES users(id);
 
 DROP TABLE IF EXISTS friendship;
 CREATE TABLE friendship (
-    user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на инициатора дружеских отношений",
-    friend_id INT UNSIGNED NOT NULL COMMENT "Ссылка на получателя приглашения дружить",
-    friendship_status ENUM('FRIENDSHIP', 'FOLLOWING', 'BLOCKED') COMMENT "Cтатус (текущее состояние) отношений",
-	requested_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время отправления приглашения дружить",
-	confirmed_at DATETIME COMMENT "Время подтверждения приглашения",
-	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки",  
-	PRIMARY KEY (user_id, friend_id) COMMENT "Составной первичный ключ"
-) COMMENT 'Таблица дружбы пользователей';
+    user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РёРЅРёС†РёР°С‚РѕСЂР° РґСЂСѓР¶РµСЃРєРёС… РѕС‚РЅРѕС€РµРЅРёР№",
+    friend_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СѓС‡Р°С‚РµР»СЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ РґСЂСѓР¶РёС‚СЊ",
+    friendship_status ENUM('FRIENDSHIP', 'FOLLOWING', 'BLOCKED') COMMENT "CС‚Р°С‚СѓСЃ (С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ) РѕС‚РЅРѕС€РµРЅРёР№",
+	requested_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕС‚РїСЂР°РІР»РµРЅРёСЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ РґСЂСѓР¶РёС‚СЊ",
+	confirmed_at DATETIME COMMENT "Р’СЂРµРјСЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ",
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё",  
+	PRIMARY KEY (user_id, friend_id) COMMENT "РЎРѕСЃС‚Р°РІРЅРѕР№ РїРµСЂРІРёС‡РЅС‹Р№ РєР»СЋС‡"
+) COMMENT 'РўР°Р±Р»РёС†Р° РґСЂСѓР¶Р±С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№';
 
 ALTER TABLE friendship ADD CONSTRAINT fk_friendship_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE friendship ADD CONSTRAINT fk_friendship_friend_id FOREIGN KEY (friend_id) REFERENCES users(id);
 
--- Таблица групп
+-- РўР°Р±Р»РёС†Р° РіСЂСѓРїРї
 DROP TABLE IF EXISTS communities;
 CREATE TABLE communities (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор сроки",
-  name VARCHAR(150) NOT NULL UNIQUE COMMENT "Название группы",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Группы";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃСЂРѕРєРё",
+  name VARCHAR(150) NOT NULL UNIQUE COMMENT "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "Р“СЂСѓРїРїС‹";
 
--- Таблица связи пользователей и групп
+-- РўР°Р±Р»РёС†Р° СЃРІСЏР·Рё РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ Рё РіСЂСѓРїРї
 DROP TABLE IF EXISTS communities_users;
 CREATE TABLE communities_users (
-  community_id INT UNSIGNED NOT NULL COMMENT "Ссылка на группу",
-  user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на пользователя",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки", 
-  PRIMARY KEY (community_id, user_id) COMMENT "Составной первичный ключ"
-) COMMENT "Участники групп, связь между пользователями и группами";
+  community_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РіСЂСѓРїРїСѓ",
+  user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё", 
+  PRIMARY KEY (community_id, user_id) COMMENT "РЎРѕСЃС‚Р°РІРЅРѕР№ РїРµСЂРІРёС‡РЅС‹Р№ РєР»СЋС‡"
+) COMMENT "РЈС‡Р°СЃС‚РЅРёРєРё РіСЂСѓРїРї, СЃРІСЏР·СЊ РјРµР¶РґСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё Рё РіСЂСѓРїРїР°РјРё";
 
 ALTER TABLE communities_users ADD CONSTRAINT fk_cu_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE communities_users ADD CONSTRAINT fk_cu_community_id FOREIGN KEY (community_id) REFERENCES communities(id);
 
 DROP TABLE IF EXISTS entity_types;
 CREATE TABLE entity_types (
-  `name` varchar(100) NOT NULL PRIMARY KEY COMMENT 'Имя сущности'
-) COMMENT 'Справочная таблица с перечнем сущностей, которым можно поставить лайк';
+  `name` varchar(100) NOT NULL PRIMARY KEY COMMENT 'РРјСЏ СЃСѓС‰РЅРѕСЃС‚Рё'
+) COMMENT 'РЎРїСЂР°РІРѕС‡РЅР°СЏ С‚Р°Р±Р»РёС†Р° СЃ РїРµСЂРµС‡РЅРµРј СЃСѓС‰РЅРѕСЃС‚РµР№, РєРѕС‚РѕСЂС‹Рј РјРѕР¶РЅРѕ РїРѕСЃС‚Р°РІРёС‚СЊ Р»Р°Р№Рє';
 
 CREATE TABLE likes (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Идентификатор строки',
-    from_user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на пользователя лайкнувшего пост",
-    entity_id INT UNSIGNED NOT NULL COMMENT "Ссылка на другую сущность",
-    entity_name VARCHAR(128) NOT NULL COMMENT "Ссылка на медиа",
-    created_at datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Время создания строки',
-    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время обновления строки'
-) COMMENT 'Таблица лайков';
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё',
+    from_user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Р»Р°Р№РєРЅСѓРІС€РµРіРѕ РїРѕСЃС‚",
+    entity_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РґСЂСѓРіСѓСЋ СЃСѓС‰РЅРѕСЃС‚СЊ",
+    entity_name VARCHAR(128) NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РјРµРґРёР°",
+    created_at datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё',
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё'
+) COMMENT 'РўР°Р±Р»РёС†Р° Р»Р°Р№РєРѕРІ';
 
 ALTER TABLE likes ADD CONSTRAINT fk_likes_entity_name FOREIGN KEY (entity_name) REFERENCES entity_types(`name`);
 
 DROP TABLE IF EXISTS posts;
 CREATE TABLE posts (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Идентификатор строки',
-  user_id INT UNSIGNED DEFAULT NULL COMMENT 'Ссылка на идентификатор пользователя который опубликовал пост',
-  community_id INT UNSIGNED DEFAULT NULL COMMENT 'Ссылка на дентификатор пользователя который опубликовал пост',
-  post_content TEXT COMMENT 'Текст произвольной длины',
-  visibility VARCHAR(100) NOT NULL COMMENT 'Ссылка на вариант видимости поста',
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Время публикации поста',
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время обновления строки'
-) COMMENT 'Посты пользователей и групп';
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё',
+  user_id INT UNSIGNED DEFAULT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєРѕС‚РѕСЂС‹Р№ РѕРїСѓР±Р»РёРєРѕРІР°Р» РїРѕСЃС‚',
+  community_id INT UNSIGNED DEFAULT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєРѕС‚РѕСЂС‹Р№ РѕРїСѓР±Р»РёРєРѕРІР°Р» РїРѕСЃС‚',
+  post_content TEXT COMMENT 'РўРµРєСЃС‚ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ РґР»РёРЅС‹',
+  visibility VARCHAR(100) NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РІР°СЂРёР°РЅС‚ РІРёРґРёРјРѕСЃС‚Рё РїРѕСЃС‚Р°',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РїСѓР±Р»РёРєР°С†РёРё РїРѕСЃС‚Р°',
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё'
+) COMMENT 'РџРѕСЃС‚С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ Рё РіСЂСѓРїРї';
 
 DROP TABLE IF EXISTS visibility;
 CREATE TABLE visibility (
-  `value` VARCHAR(100) NOT NULL PRIMARY KEY COMMENT 'Тип видимости'
-) COMMENT 'Справочник вариантов видимости объектов на странице';
+  `value` VARCHAR(100) NOT NULL PRIMARY KEY COMMENT 'РўРёРї РІРёРґРёРјРѕСЃС‚Рё'
+) COMMENT 'РЎРїСЂР°РІРѕС‡РЅРёРє РІР°СЂРёР°РЅС‚РѕРІ РІРёРґРёРјРѕСЃС‚Рё РѕР±СЉРµРєС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ';
 
 ALTER TABLE posts ADD CONSTRAINT fk_post_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE posts ADD CONSTRAINT fk_post_community_id FOREIGN KEY (community_id) REFERENCES communities(id);
@@ -119,40 +119,40 @@ ALTER TABLE posts ADD CONSTRAINT fk_post_visibility_id FOREIGN KEY (visibility) 
 
 DROP TABLE IF EXISTS media;
 CREATE TABLE media (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Идентификатор строки',
-  media_type VARCHAR(100) NOT NULL COMMENT 'Ссылка на тип контента',
-  link VARCHAR(1000) NOT NULL COMMENT 'Ссылка на файл',
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Время создания строки',
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время обновления строки'
-) COMMENT 'Медиа';
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё',
+  media_type VARCHAR(100) NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° С‚РёРї РєРѕРЅС‚РµРЅС‚Р°',
+  link VARCHAR(1000) NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° С„Р°Р№Р»',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё',
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё'
+) COMMENT 'РњРµРґРёР°';
 
 DROP TABLE IF EXISTS media_types;
 CREATE TABLE media_types (
-  `name` VARCHAR(100) NOT NULL PRIMARY KEY COMMENT 'Тип медиайла'
-) COMMENT 'Тип медиа контента';
+  `name` VARCHAR(100) NOT NULL PRIMARY KEY COMMENT 'РўРёРї РјРµРґРёР°Р№Р»Р°'
+) COMMENT 'РўРёРї РјРµРґРёР° РєРѕРЅС‚РµРЅС‚Р°';
 
 ALTER TABLE media ADD CONSTRAINT fk_media_type_id FOREIGN KEY (media_type) REFERENCES media_types(`name`);
 
 DROP TABLE IF EXISTS posts_media;
 CREATE TABLE posts_media (
-  post_id INT UNSIGNED NOT NULL COMMENT 'Ссылка на идентификатор поста',
-  media_id INT UNSIGNED NOT NULL COMMENT 'Ссылка на идентификатор медиа',
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Время создания строки',
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время обновления строки',
+  post_id INT UNSIGNED NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕСЃС‚Р°',
+  media_id INT UNSIGNED NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјРµРґРёР°',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё',
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё',
   PRIMARY KEY (post_id, media_id)
-) COMMENT 'Связь постов и медиа';
+) COMMENT 'РЎРІСЏР·СЊ РїРѕСЃС‚РѕРІ Рё РјРµРґРёР°';
 
 ALTER TABLE posts_media ADD CONSTRAINT fk_pm_media_id FOREIGN KEY (media_id) REFERENCES media(id);
 ALTER TABLE posts_media ADD CONSTRAINT fk_pm_post_id FOREIGN KEY (post_id) REFERENCES posts(id);
 
 DROP TABLE IF EXISTS messages_media;
 CREATE TABLE messages_media (
-  message_id int unsigned NOT NULL COMMENT 'Ссылка на идентификатор сообшения',
-  media_id int unsigned NOT NULL COMMENT 'Ссылка на идентификатор медиа',
-  created_at datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Время создания строки',
-  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время обновления строки',
+  message_id int unsigned NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕРѕР±С€РµРЅРёСЏ',
+  media_id int unsigned NOT NULL COMMENT 'РЎСЃС‹Р»РєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјРµРґРёР°',
+  created_at datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё',
+  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё',
   PRIMARY KEY (message_id, media_id)
-) COMMENT 'Связь сообщений и медиа';
+) COMMENT 'РЎРІСЏР·СЊ СЃРѕРѕР±С‰РµРЅРёР№ Рё РјРµРґРёР°';
 
 ALTER TABLE messages_media ADD CONSTRAINT fk_mm_media_id FOREIGN KEY (media_id) REFERENCES media (id);
 ALTER TABLE messages_media ADD CONSTRAINT fk_mm_message_id FOREIGN KEY (message_id) REFERENCES messages (id);
