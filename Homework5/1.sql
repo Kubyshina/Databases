@@ -44,13 +44,8 @@ SELECT value FROM storehouses_products ORDER BY value = 0, value;
 -- 4. (по желанию) Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. 
 -- Месяцы заданы в виде списка английских названий (may, august)
 
--- Подготовим таблицу
-ALTER TABLE users CHANGE birthday_at birthday_at VARCHAR(100);
-UPDATE users SET birthday_at = "15 may 1985" WHERE id IN (1, 2, 3);
-UPDATE users SET birthday_at = "30 august 1988" WHERE id IN (5, 6);
-
 -- Сам запрос
-SELECT  * FROM users WHERE birthday_at LIKE '%may%' or birthday_at LIKE '%august%';
+SELECT  * FROM users WHERE LOWER(MONTHNAME(birthday_at)) IN ('may', 'august');
 
 -- 5. (по желанию) Из таблицы catalogs извлекаются записи при помощи запроса. 
 -- SELECT * FROM catalogs WHERE id IN (5, 1, 2); 
