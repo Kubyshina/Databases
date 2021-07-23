@@ -1,6 +1,4 @@
 -- 1. Пусть задан некоторый пользователь. Из всех друзей этого пользователя найдите человека, который больше всех общался с нашим пользователем.
-USE vk;
-
 WITH friends_messages AS (
 	WITH friends AS (
 SELECT
@@ -169,6 +167,8 @@ LIMIT 10;
 
 
 -- 5. (по желанию) Для каждого пользователя i, с которым общался пользователь 1, вывести дату последнего сообщения, полное имя пользователя i и два флага:
+-- флаг означающий входящее/исходящее относительно пользователя 1
+-- если это входящее, то выводим 1, если непрочитанное, 0, если прочитанное
 WITH friends_messages AS (
 	WITH friends AS (
 SELECT
@@ -231,8 +231,8 @@ INNER JOIN
 SELECT
 	MAX(m.created_at),
 	f.other_user_name,
-	m.is_delivered ,
-	m.was_edited
+	(SELECT to_user_id = 1 FROM messages WHERE id = m.id) AS is_income,
+	(SELECT is_delivered = 1 FROM messages WHERE id = m.id AND to_user_id = 1) AS is_read
 FROM
 	friends_messages f
 INNER JOIN
