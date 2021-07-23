@@ -112,7 +112,7 @@ SELECT
 		WHERE
 			prof.user_id = from_user_id) AS gender
 FROM likes GROUP BY 
-gender ORDER BY gender LIMIT 1;
+gender ORDER BY total_likes DESC LIMIT 1;
 
 -- 5. Найти 10 пользователей, которые проявляют наименьшую активность в использовании социальной сети.
 -- Активность определяю по общему количеству постов, лайков и сообщений.
